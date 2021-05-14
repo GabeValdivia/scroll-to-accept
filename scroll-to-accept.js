@@ -1,13 +1,20 @@
 function scrollToAccept() {
   const terms = document.querySelector('.terms-and-conditions');
+  const watch = document.querySelector('.watch');
+  const button = document.querySelector('.accept');
 
-  if (!terms) {
-    return; // quit this function if there isn't a terms section on page
+  function obCallback(payload) {
+    if (payload[0].intersectionRatio === 1) {
+      button.disabled = false;
+    }
   }
 
-  terms.addEventListener('scroll', function (e) {
-    console.log(e);
+  const ob = new IntersectionObserver(obCallback, {
+    root: terms,
+    threshold: 1,
   });
+
+  ob.observe(terms.lastElementChild);
 }
 
 scrollToAccept();
